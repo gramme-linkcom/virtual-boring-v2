@@ -1,0 +1,61 @@
+# vb2026-utility-tools 用 clang-format 設定
+# CODING_GUIDELINES.md の「4. C++ の書き方」に合わせている。
+# 命名規則（snake_case など）は clang-format では扱えないため、必要なら clang-tidy で別途チェックする。
+---
+Language: Cpp
+BasedOnStyle: LLVM
+Standard: c++20
+
+# インデントはスペース4つ（規約）
+IndentWidth: 4
+TabWidth: 4
+UseTab: Never
+ContinuationIndentWidth: 4
+AccessModifierOffset: -4
+IndentCaseLabels: true
+NamespaceIndentation: None
+
+# 行末の空白は残さない。行の長さは画面で読みやすい範囲に収める
+ColumnLimit: 100
+
+# 波括弧は行末に置く（既存コードの書き方）
+BreakBeforeBraces: Attach
+
+# ポインター・参照は型側に寄せる（例: char* argv, const std::string& name）
+PointerAlignment: Left
+DerivePointerAlignment: false
+
+# 小さな関数は1行にまとめない（デバッグ時にブレークポイントを置きやすくする）
+AllowShortFunctionsOnASingleLine: None
+AllowShortIfStatementsOnASingleLine: Never
+AllowShortLoopsOnASingleLine: false
+AllowShortBlocksOnASingleLine: Never
+AllowShortCaseLabelsOnASingleLine: false
+
+# include は自動で並べ替える（自プロジェクト → 外部ライブラリ → 標準ライブラリ）
+SortIncludes: CaseSensitive
+IncludeBlocks: Regroup
+IncludeCategories:
+  - Regex: '^"vb/'
+    Priority: 1
+  - Regex: '^<[a-z_]+>$'
+    Priority: 3
+  - Regex: '^<.*>$'
+    Priority: 2
+  - Regex: '^".*"$'
+    Priority: 1
+
+# 引数や初期化子が長いときは、1行に1個ずつ並べる
+BinPackArguments: false
+BinPackParameters: false
+AlignAfterOpenBracket: AlwaysBreak
+BreakConstructorInitializers: BeforeColon
+ConstructorInitializerIndentWidth: 4
+
+# namespace の閉じ括弧にコメントを付ける
+FixNamespaceComments: true
+ReflowComments: true
+SpacesBeforeTrailingComments: 2
+MaxEmptyLinesToKeep: 1
+KeepEmptyLinesAtTheStartOfBlocks: false
+...
